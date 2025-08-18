@@ -16,7 +16,7 @@
 Shreemadhi Babu Rajendra Prasad (24207575) · Saipavan Narayanasamy (24233785) 
 *M.Sc. in Data & Computational Science, University College Dublin*
 
-**Poster**: `poster/final_project_poster_A0.pdf`
+**Poster:** [Project Poster](./poster/final_project_poster_A0.pdf)
 
 ---
 
@@ -49,6 +49,14 @@ We build a small research app that:
 4) fits a **Bayesian Student-t regression** (with PyMC) for **next-day log-return** and **3-day price forecasts**, reporting **94% HDIs** for parameters and **90% prediction intervals** (PIs) for prices.
 
 ---
+
+## Workflow overview
+
+<p align="center">
+  <img src="outputs/flowchart.png"
+       alt="End-to-end workflow: data → sentiment → model → forecasts"
+       width="300">
+</p>
 
 ## Demo / Screenshots
 
