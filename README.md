@@ -52,19 +52,17 @@ We build a small research app that:
 
 ## Demo / Screenshots
 
-> Replace these image paths with your actual screenshots under `outputs/` .
+### Forecast charts
 
 <p align="center">
-  <img src="outputs/tab_ticker1.png" alt="Ticker 1 view" width="85%">
+  <img src="outputs/tsla_forecast.png" alt="TSLA — Price forecast (next 3 days)" width="48%">
+  <img src="outputs/aapl_forecast.png" alt="AAPL — Price forecast (next 3 days)" width="48%">
 </p>
 
-<p align="center">
-  <img src="outputs/tab_ticker2.png" alt="Ticker 2 view" width="85%">
-</p>
+### Comparison
+<img src="outputs/comparison_history_vs_forecast.png"
+     alt="Comparison around 'Today': history vs mean forecast">
 
-<p align="center">
-  <img src="outputs/tab_compare.png" alt="Comparison view" width="85%">
-</p>
 
 ---
 
