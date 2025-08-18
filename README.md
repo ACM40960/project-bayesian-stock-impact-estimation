@@ -1,1 +1,3 @@
 
+
+**License:** MIT (see LICENSE).
