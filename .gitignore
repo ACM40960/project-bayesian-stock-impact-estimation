@@ -1,0 +1,19 @@
+# Python / env
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+
+# Editors / OS
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Streamlit cache
+.streamlit/
+
+# Data/outputs
+results/*.csv
+outputs/*
+!outputs/.gitkeep
