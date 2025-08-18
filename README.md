@@ -1,340 +1,239 @@
-Bayesian Estimation of Sentiment Impact on Stock Prices
+<h1 align="center"> Bayesian Estimation of Sentiment Impact on Stock Prices</h1>
 
-Saipavan Narayanasamy (24235785) · Shreemadhi Babu Rajendra Prasad (24207575)
-M.Sc. in Data & Computational Science, University College Dublin
+<p align="center">
+  <i>Latest headlines → VADER sentiment → Bayesian Student-t regression (PyMC) → next-day log-return and multi-day price forecasts with uncertainty.</i>
+</p>
 
-Poster : poster/final_project_poster_A0.pdf
+<p align="center">
+  <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/License-MIT-yellow.svg"></a>
+  <img alt="Python" src="https://img.shields.io/badge/Python-3.9%2B-blue.svg">
+  <img alt="Streamlit" src="https://img.shields.io/badge/Streamlit-app-FF4B4B.svg?logo=streamlit&logoColor=white">
+  <img alt="PyMC" src="https://img.shields.io/badge/PyMC-Bayesian%20inference-3776AB.svg">
+  <img alt="Status" src="https://img.shields.io/badge/Release-v1.0.0-success.svg">
+</p>
 
-Latest headlines → VADER sentiment → Bayesian Student-t regression (PyMC) → next-day log-return and multi-day price forecasts with uncertainty.
+**Authors**  
+Shreemadhi Babu Rajendra Prasad (24207575) · Saipavan Narayanasamy (24233785) 
+*M.Sc. in Data & Computational Science, University College Dublin*
 
-Contents
+**Poster**: `poster/final_project_poster_A0.pdf`
 
-Demo / Screenshots
+---
 
-What the app does
+## Table of Contents
+- [Overview](#overview)
+- [Demo / Screenshots](#demo--screenshots)
+- [What the app does](#what-the-app-does)
+- [Model in one slide](#model-in-one-slide)
+- [Install & Run](#install--run)
+- [Using the app](#using-the-app)
+- [Outputs & Run Log](#outputs--run-log)
+- [Project Structure](#project-structure)
+- [About the project](#about-the-project)
+- [Limitations & future work](#limitations--future-work)
+- [Tech stack](#tech-stack)
+- [License](#license)
+- [Cite](#cite)
+- [Acknowledgments](#acknowledgments)
+- [Maintainers](#maintainers)
 
-Model in one slide
+---
 
-Install & Run
+## Overview
 
-Using the app
+We build a small research app that:
 
-Outputs & Run Log
+1) pulls the latest news headlines per ticker,  
+2) scores each headline with **NLTK VADER** (compound),  
+3) aggregates to a **daily sentiment signal** \(z_t\), and  
+4) fits a **Bayesian Student-t regression** (with PyMC) for **next-day log-return** and **3-day price forecasts**, reporting **94% HDIs** for parameters and **90% prediction intervals** (PIs) for prices.
 
-Project structure
+---
 
-About the project
+## Demo / Screenshots
 
-Limitations & future work
+> Replace these image paths with your actual screenshots under `outputs/` .
 
-Tech stack
+<p align="center">
+  <img src="outputs/tab_ticker1.png" alt="Ticker 1 view" width="85%">
+</p>
 
-License
+<p align="center">
+  <img src="outputs/tab_ticker2.png" alt="Ticker 2 view" width="85%">
+</p>
 
-Cite
+<p align="center">
+  <img src="outputs/tab_compare.png" alt="Comparison view" width="85%">
+</p>
 
-Acknowledgments
+---
 
-Demo / Screenshots
+## What the app does
 
-(Optional) drop a few PNGs into outputs/ and uncomment the lines below.
+- **Headlines → sentiment**: For each ticker, fetch recent public headlines and score with **VADER** (compound). Average by day to create \(z_t\).
+- **Bayesian regression**: Fit a **Student-t** regression of next-day log-return on **yesterday’s** sentiment \(z_{t-1}\) (lag-1). Heavy tails robustify against outliers.
+- **Uncertainty first-class**: Report **94% HDIs** for \(\alpha,\beta,\sigma,\nu\) and **90% PIs** for predicted prices.
+- **Forecasts**: Produce next-3-day price forecast table and chart.
+- **Comparison**: Side-by-side **β (sentiment effect)** table across two tickers + **indexed history vs mean forecast** plot.
+- **Reproducible logging**: Append each run to a local CSV at `results/predictions_log.csv` (kept out of Git by `.gitignore`).
 
-<!-- ![TSLA — Price forecast (next 3 days)](outputs/tsla_forecast.png) ![AAPL — Price forecast (next 3 days)](outputs/aapl_forecast.png) ![Comparison around “Today”: history vs mean forecast](outputs/comparison.png) -->
-What the app does
+---
 
-Headlines → sentiment. Pulls the latest news headlines per ticker and scores them with NLTK VADER (compound score), then averages by day to create a daily sentiment signal 
-𝑧
-𝑡
-z
-t
-	​
+## Model in one slide
 
-.
+We model **daily log-returns** with heavy tails:
 
-Bayesian regression. Fits a Student-t regression of next-day log-return on yesterday’s sentiment (lag-1). Heavy-tailed noise handles outliers in financial returns.
+$$
+r_t \;=\; \alpha + \beta\, z_{t-1} + \varepsilon_t,
+\qquad
+\varepsilon_t \sim \text{Student-t}(\nu, 0, \sigma)
+$$
 
-Uncertainty first-class. We report 94% HDIs (posterior credible intervals) for parameters 
-(
-𝛼
-,
-𝛽
-,
-𝜎
-,
-𝜈
-)
-(α,β,σ,ν) and 90% prediction intervals for prices.
+- $r_t$: next-day log-return  
+- $z_{t-1}$: yesterday’s (lag-1) **VADER** daily average  
+- Parameters $(\alpha,\beta,\sigma,\nu)$ are inferred with **PyMC** (NUTS).  
+- **β answers:** _does yesterday’s sentiment move tomorrow’s return?_  
+- Price forecasts are obtained by transforming simulated log-return paths to prices.
 
-Forecasts. Produces next 3-day price forecasts (mean + 90% PI) from Monte-Carlo paths.
+---
 
-Comparison. A quick table for 
-𝛽
-β (sentiment effect) across two tickers + an indexed history vs forecast plot.
+## Install & Run
 
-Reproducible log. Each run appends rows to results/predictions_log.csv (kept local by .gitignore so the repo stays slim).
+> [Python **3.9+** recommended](https://www.python.org/downloads/) · [Docs](https://docs.python.org/3.9/)
 
-Model in one slide
+### 1) Create & activate a virtual environment
 
-We model daily log-returns with heavy tails:
-
-𝑟
-𝑡
-  
-=
-  
-𝛼
-  
-+
-  
-𝛽
- 
-𝑧
-𝑡
-−
-1
-  
-+
-  
-𝜀
-𝑡
-,
-𝜀
-𝑡
-∼
-Student-t
-(
-𝜈
-,
-0
-,
-𝜎
-)
-r
-t
-	​
-
-=α+βz
-t−1
-	​
-
-+ε
-t
-	​
-
-,ε
-t
-	​
-
-∼Student-t(ν,0,σ)
-
-𝑟
-𝑡
-r
-t
-	​
-
-: next-day log-return
-
-𝑧
-𝑡
-−
-1
-z
-t−1
-	​
-
-: yesterday’s (lag-1) VADER sentiment (daily average)
-
-𝛼
-,
-𝛽
-,
-𝜎
-,
-𝜈
-α,β,σ,ν: parameters inferred with PyMC (NUTS)
-
-𝛽
-β answers: does yesterday’s news sentiment move tomorrow’s return?
-
-Price forecasts are obtained by transforming log-return scenarios to prices.
-
-Install & Run
-
-Python 3.9+ recommended.
-
-# 1) Create and activate a virtual environment
+**Windows**
+~~~bash
 python -m venv venv
-# Windows
 venv\Scripts\activate
-# macOS/Linux
-# source venv/bin/activate
+~~~
 
-# 2) Install packages
+**macOS/Linux**
+~~~bash
+python -m venv venv
+source venv/bin/activate
+~~~
+
+### 2) Install packages
+~~~bash
 pip install -r requirements.txt
+~~~
 
-# 3) One-time: download VADER lexicon used by NLTK
+### 3) One-time: download VADER lexicon used by NLTK
+~~~bash
 python -m nltk.downloader vader_lexicon
+~~~
 
-# 4) Launch the app
+### 4) Launch the app
+~~~bash
 streamlit run app/streamlit_app.py
+~~~
 
+Open the local URL shown by Streamlit (usually `http://localhost:8501`).
 
-Open the local URL shown by Streamlit (usually http://localhost:8501).
+---
 
-Using the app
+## Using the app
 
-Ticker A (required) and Ticker B (optional).
+**Inputs**
+- **Ticker A** (required) and **Ticker B** (optional)
+- **Run Speed:** _Fast / Standard / Accurate_ (controls MCMC draws / tuning)
 
-Run Speed: Fast / Standard / Accurate (controls MCMC draws / tuning).
+**Tabs**
+- **Ticker 1 / Ticker 2:** company blurb, **Latest Headlines**, **Predicted Log-Return**, **Next Price (90% PI)**, **Today’s Sentiment**, **Posterior Summary**, **3-day Price Forecast** (table + chart).
+- **Comparison:** quick table of **\(\beta\)** (mean + 94% HDI) and **Day-1 price forecast**; **indexed history vs mean forecast** dots.
+- **Run log:** a banner displays whether the log CSV was **Created** or **Appended**. You can also download the log directly from the UI.
 
-Tabs:
+---
 
-Ticker 1 / Ticker 2: company blurb, Latest Headlines, Predicted Log-Return, Next Price (90% PI), Today’s Sentiment, Posterior Summary, 3-day Price Forecast (table + chart).
+## Outputs & Run Log
 
-Comparison: quick table with 
-𝛽
-β (mean + 94% HDI) and day-1 price forecast; indexed history vs forecast dots.
+**Figures & tables shown in the UI**
+- **Predicted log-return** (mean + 94% HDI)  
+- **Next price** (mean + 90% PI)  
+- **Posterior summary** for \(\alpha, \beta, \sigma, \nu\) with diagnostics (**ESS**, **\(\hat{R}\)**)  
+- **3-day price forecast:** `(day_ahead, price_mean, price_p05, price_p95)` + chart
 
-Run log: a banner displays whether the log CSV was Created or Appended to. You can also download the log directly from the UI.
-
-Outputs & Run Log
-
-Figures & tables shown in the UI:
-
-Predicted log-return (mean + 94% HDI)
-
-Next price (mean + 90% PI)
-
-Posterior summary for 
-𝛼
-,
-𝛽
-,
-𝜎
-,
-𝜈
-α,β,σ,ν with diagnostics (ESS, 
-𝑅
-^
-R
-^
-)
-
-3-day price forecast: table (day_ahead, price_mean, price_p05, price_p95) + chart
-
-Run log CSV: results/predictions_log.csv (local; ignored by Git)
-
-Contains timestamp, ticker, posterior summaries and key forecast numbers (including day-ahead price mean and prediction interval endpoints).
-
+**Run log CSV:** `results/predictions_log.csv` _(local; ignored by Git)_  
+Contains timestamp, tickers, posterior summaries and key forecast numbers (including **day-ahead price mean** and **PI endpoints**).  
 Useful for auditing, comparisons across runs, and lightweight experimentation.
 
-The repository keeps results/ tracked only via a .gitkeep. This avoids committing large, ever-growing logs.
+---
 
-Project structure
-app/
-  streamlit_app.py            # Streamlit UI + modeling/forecast glue
-poster/
-  final_project_poster_A0.pdf # A0 poster
-literature/                   # (add literature-review PDFs here)
-outputs/                      # screenshots/exports (optional; .gitkeep added)
-results/                      # run logs (local; ignored by Git; .gitkeep added)
-requirements.txt
-LICENSE
+## Project structure
+```text
+project/
+├─ app/
+│  └─ streamlit_app.py           # Streamlit UI + modeling/forecast glue
+├─ poster/
+│  └─ final_project_poster_A0.pdf
+├─ literature/                   # (optional) add literature-review PDFs here
+├─ outputs/                      # screenshots/exports (optional; .gitkeep added)
+├─ results/
+│  └─ predictions_log.csv        # run log (local; ignored by Git)
+├─ requirements.txt
+└─ README.md
+├─ requirements.txt
+└─ README.md
+```
 
-About the project
+---
 
-Motivation. Markets react to information; news headlines are a fast, public signal. We ask:
+## About the project
 
-Can daily news-headline sentiment help predict a stock’s next-day return?
+**Goal.** Turn daily headlines into a **quantitative sentiment signal** and measure its **predictive effect** on **next-day returns**; produce **uncertainty-aware price forecasts** over short horizons.
 
-Design choices.
+**Why Student-t?** Heavy-tailed residuals guard against outliers and volatility clustering common in returns.
 
-Use VADER (rule-based, fast, tuned for short social/news text) for sentiment.
+**Why Bayesian?** Full posteriors + diagnostics (ESS, $\hat{R}$) + calibrated prediction intervals.
 
-Lag sentiment by one day (
-𝑧
-𝑡
-−
-1
-z
-t−1
-	​
+**Why Streamlit?** A fast, transparent interface to explore data, diagnostics, and forecasts.
 
-) to avoid look-ahead bias.
+---
 
-Model log-returns with a Student-t likelihood to handle fat tails/outliers.
+## Limitations & future work
 
-Use Bayesian inference to quantify full uncertainty (HDIs, diagnostics).
+- Predictability may be **weak/noisy**; real-world alpha is hard.  
+- Headline sampling & VADER rules can bias the signal — try **domain-tuned** or **LLM** sentiment.  
+- Extend to **multivariate** models (market/sector factors), **hierarchical** priors, or **state-space** models with **stochastic volatility**.  
+- **Evaluation:** add rolling backtests; CRPS/quantile loss for PIs; compare with AR/ARX/GARCH baselines.  
+- Scheduled data refresh, richer news sources, and caching.
 
-What 
-𝛽
-β means.
+> **Disclaimer:** For research/education only — not financial advice.
 
-𝛽
-β is the marginal effect of yesterday’s sentiment on tomorrow’s log-return.
+---
 
-If the 94% HDI includes 0, we do not have robust evidence that daily sentiment shifts next-day returns (a common outcome in efficient markets).
+## Tech stack
 
-We still propagate uncertainty to price forecasts (mean + 90% PI) to show what ranges are plausible given current information.
+**Python · Streamlit · PyMC · ArviZ · NumPy · pandas · Matplotlib · NLTK (VADER) · requests/bs4 · yfinance**
 
-Deliverables.
+---
 
-Interactive Streamlit app
+## License
 
-A0 poster summarizing problem, workflow, model, and results
+**MIT** — see [`LICENSE`](LICENSE).
 
-Clean Git history with a v1.0.0 release
+---
 
-Reproducible environment via requirements.txt (+ optional lock file)
-
-Limitations & future work
-
-Signal strength. Daily sentiment is noisy; 
-𝛽
-β often has HDIs covering 0. Consider:
-
-Longer horizons (weekly), alternative features (topic/NER, finance-tuned sentiment),
-
-Intraday granularity with market-open/close windows,
-
-Regime switching / time-varying coefficients.
-
-Data coverage. Headlines vary by source; add richer sources / APIs and de-duplication.
-
-Econometrics. Explore multivariate models (market/sector factors), hierarchical priors, or state-space models with stochastic volatility.
-
-Evaluation. Backtesting with a rolling window; CRPS or quantile loss for PIs.
-
-Disclaimer: For research/education only — not financial advice.
-
-Tech stack
-
-Python · Streamlit · PyMC · ArviZ · NumPy · pandas · Matplotlib · NLTK (VADER) · requests/bs4 · yfinance
-
-License
-
-MIT — see LICENSE.
-
-Cite
+## Cite
 
 If you reference this project:
 
-Narayanasamy, S.; Rajendra Prasad, S.B. (2025). Bayesian Estimation of Sentiment Impact on Stock Prices. Version 1.0.0. MIT License.
-Poster: poster/final_project_poster_A0.pdf.
+> Narayanasamy, S.; Rajendra Prasad, S.B. (2025). _Bayesian Estimation of Sentiment Impact on Stock Prices_. Version 1.0.0. MIT License. Poster: `poster/final_project_poster_A0.pdf`.
 
-Acknowledgments
+---
 
-VADER sentiment (NLTK)
+## Acknowledgments
 
-PyMC / ArviZ for Bayesian modeling & diagnostics
+- **VADER** sentiment (NLTK)  
+- **PyMC / ArviZ** for Bayesian modeling & diagnostics  
+- Public headline sources used by the app; Yahoo price data  
+- **UCD — ACM40960 Projects in Maths Modelling**
 
-News/price data providers used in the app (public headline sources; Yahoo price data)
+---
 
-UCD — ACM40960 Projects in Maths Modelling
+## Maintainers
 
-Maintainers
-
-Saipavan Narayanasamy — 24235785
-
-Shreemadhi Babu Rajendra Prasad — 24207575
+- **Sai pavan Narayanasamy** — 24235785  
+- **Shreemadhi Babu Rajendra Prasad** — 24207575
