@@ -239,7 +239,7 @@ If you reference this project:
 
 ---
 
-## Maintainers
+## Contributors
 
-- **Sai pavan Narayanasamy** — 24235785  
-- **Shreemadhi Babu Rajendra Prasad** — 24207575
+- **Sai pavan Narayanasamy** (24235785) - Saipavan.narayanasamy@ucdconnect.ie  
+- **Shreemadhi Babu Rajendra Prasad** (24207575) - shreemadhi.baburajendrapra@ucdconnect.ie
