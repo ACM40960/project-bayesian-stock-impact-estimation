@@ -21,22 +21,44 @@ Shreemadhi Babu Rajendra Prasad (24207575) · Saipavan Narayanasamy (24233785) -
 ---
 
 ## Table of Contents
-- [Overview](#overview)
+- [About the project](#about-the-project)
 - [Workflow overview](#workflow-overview)
+- [Overview](#overview)
 - [What the app does](#what-the-app-does)
-- [Model in one slide](#model-in-one-slide)
+- [Bayesian Model](#Bayesian_model)
 - [Install & Run](#install--run)
 - [Using the app](#using-the-app)
 - [Outputs & Run Log](#outputs--run-log)
-- [Demo / Screenshots](#demo--screenshots)
+- [Outputs](#Outputs)
 - [Repo Structure](#repo-structure)
-- [About the project](#about-the-project)
 - [Limitations & future work](#limitations--future-work)
 - [Tech stack](#tech-stack)
 - [License](#license)
 - [Cite](#cite)
 - [Acknowledgments](#acknowledgments)
 - [Contributors](#contributors)
+
+---
+
+## About the project
+
+**Goal.** Turn daily headlines into a **quantitative sentiment signal** and measure its **predictive effect** on **next-day returns**; produce **uncertainty-aware price forecasts** over short horizons.
+
+**Why Student-t?** Heavy-tailed residuals guard against outliers and volatility clustering common in returns.
+
+**Why Bayesian?** Full posteriors + diagnostics (ESS, $\hat{R}$) + calibrated prediction intervals.
+
+**Why Streamlit?** A fast, transparent interface to explore data, diagnostics, and forecasts.
+
+---
+
+## Workflow overview
+
+<p align="center">
+  <img src="outputs/flowchart.png"
+       alt="End-to-end workflow: data → sentiment → model → forecasts"
+       width="300">
+</p>
 
 ---
 
@@ -51,16 +73,6 @@ We build a small research app that:
 
 ---
 
-## Workflow overview
-
-<p align="center">
-  <img src="outputs/flowchart.png"
-       alt="End-to-end workflow: data → sentiment → model → forecasts"
-       width="300">
-</p>
-
----
-
 ## What the app does
 
 - **Headlines → sentiment**: For each ticker, fetch recent public headlines and score with **VADER** (compound). Average by day to create \(z_t\).
@@ -72,7 +84,7 @@ We build a small research app that:
 
 ---
 
-## Model in one slide
+## Bayesian Model 
 
 We model **daily log-returns** with heavy tails:
 
@@ -154,7 +166,7 @@ Useful for auditing, comparisons across runs, and lightweight experimentation.
 
 ---
 
-## Demo / Screenshots
+## Outputs
 
 ### Forecast charts
 
@@ -198,18 +210,6 @@ project/
 ├─ requirements.txt
 └─ README.md
 ```
-
----
-
-## About the project
-
-**Goal.** Turn daily headlines into a **quantitative sentiment signal** and measure its **predictive effect** on **next-day returns**; produce **uncertainty-aware price forecasts** over short horizons.
-
-**Why Student-t?** Heavy-tailed residuals guard against outliers and volatility clustering common in returns.
-
-**Why Bayesian?** Full posteriors + diagnostics (ESS, $\hat{R}$) + calibrated prediction intervals.
-
-**Why Streamlit?** A fast, transparent interface to explore data, diagnostics, and forecasts.
 
 ---
 
