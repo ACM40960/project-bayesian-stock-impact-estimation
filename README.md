@@ -258,8 +258,7 @@ If you reference this project:
 ## Acknowledgments
 
 - **VADER** sentiment (NLTK)  
-- **PyMC / ArviZ** for Bayesian modeling & diagnostics  
-- Public headline sources used by the app; Yahoo price data  
+- Public headline sources used by the app; Yahoo price data
 - **UCD — ACM40960 Projects in Maths Modelling**
 
 ---
