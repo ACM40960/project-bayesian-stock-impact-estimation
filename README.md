@@ -13,7 +13,7 @@
 </p>
 
 **Authors**  
-Shreemadhi Babu Rajendra Prasad (24207575) · Saipavan Narayanasamy (24233785) 
+Shreemadhi Babu Rajendra Prasad (24207575) · Saipavan Narayanasamy (24233785) -
 *M.Sc. in Data & Computational Science, University College Dublin*
 
 **Poster:** [Project Poster](./poster/final_project_poster_A0.pdf)
@@ -22,6 +22,7 @@ Shreemadhi Babu Rajendra Prasad (24207575) · Saipavan Narayanasamy (24233785)
 
 ## Table of Contents
 - [Overview](#overview)
+- [Workflow overview](#workflow-overview)
 - [Demo / Screenshots](#demo--screenshots)
 - [What the app does](#what-the-app-does)
 - [Model in one slide](#model-in-one-slide)
@@ -35,7 +36,7 @@ Shreemadhi Babu Rajendra Prasad (24207575) · Saipavan Narayanasamy (24233785)
 - [License](#license)
 - [Cite](#cite)
 - [Acknowledgments](#acknowledgments)
-- [Maintainers](#maintainers)
+- [Contributors](#contributors)
 
 ---
 
@@ -136,7 +137,7 @@ python -m nltk.downloader vader_lexicon
 streamlit run app/streamlit_app.py
 ~~~
 
-Open the local URL shown by Streamlit (usually `http://localhost:8501`).
+Open the local URL shown by Streamlit (`http://localhost:8501`).
 
 ---
 
@@ -171,13 +172,13 @@ Useful for auditing, comparisons across runs, and lightweight experimentation.
 ```text
 project/
 ├─ app/
-│  └─ streamlit_app.py           # Streamlit UI + modeling/forecast glue
+│  └─ streamlit_app.py          
 ├─ poster/
 │  └─ final_project_poster_A0.pdf
-├─ literature/                   # (optional) add literature-review PDFs here
-├─ outputs/                      # screenshots/exports (optional; .gitkeep added)
+├─ literature/                   
+├─ outputs/                      
 ├─ results/
-│  └─ predictions_log.csv        # run log (local; ignored by Git)
+│  └─ predictions_log.csv        
 ├─ requirements.txt
 └─ README.md
 ├─ requirements.txt
@@ -228,6 +229,16 @@ If you reference this project:
 
 > Narayanasamy, S.; Rajendra Prasad, S.B. (2025). _Bayesian Estimation of Sentiment Impact on Stock Prices_. Version 1.0.0. MIT License. Poster: `poster/final_project_poster_A0.pdf`.
 
+>### BibTeX
+```bibtex
+@misc{narayanasamy_prasad_2025,
+  title={Bayesian Estimation of Sentiment Impact on Stock Prices},
+  author={Narayanasamy, Sai Pavan and Rajendra Prasad, Shreemadhi Babu},
+  year={2025},
+  note={Version 1.0.0. Poster: poster/final_project_poster_A0.pdf},
+  howpublished={GitHub repository}
+}
+```
 ---
 
 ## Acknowledgments
@@ -241,5 +252,5 @@ If you reference this project:
 
 ## Contributors
 
-- **Sai pavan Narayanasamy** (24235785) - Saipavan.narayanasamy@ucdconnect.ie  
-- **Shreemadhi Babu Rajendra Prasad** (24207575) - shreemadhi.baburajendrapra@ucdconnect.ie
+- **Saipavan Narayanasamy** (24235785) - <mailto:saipavan.narayanasamy@ucdconnect.ie>
+- **Shreemadhi Babu Rajendra Prasad** (24207575) - <mailto:shreemadhi.baburajendrapra@ucdconnect.ie>
