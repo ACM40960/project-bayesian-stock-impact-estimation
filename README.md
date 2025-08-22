@@ -23,13 +23,13 @@ Shreemadhi Babu Rajendra Prasad (24207575) · Saipavan Narayanasamy (24233785) -
 ## Table of Contents
 - [Overview](#overview)
 - [Workflow overview](#workflow-overview)
-- [Demo / Screenshots](#demo--screenshots)
 - [What the app does](#what-the-app-does)
 - [Model in one slide](#model-in-one-slide)
 - [Install & Run](#install--run)
 - [Using the app](#using-the-app)
 - [Outputs & Run Log](#outputs--run-log)
-- [Project Structure](#project-structure)
+- [Demo / Screenshots](#demo--screenshots)
+- [Repo Structure](#repo-structure)
 - [About the project](#about-the-project)
 - [Limitations & future work](#limitations--future-work)
 - [Tech stack](#tech-stack)
@@ -58,20 +58,6 @@ We build a small research app that:
        alt="End-to-end workflow: data → sentiment → model → forecasts"
        width="300">
 </p>
-
-## Demo / Screenshots
-
-### Forecast charts
-
-<p align="center">
-  <img src="outputs/tsla_forecast.png" alt="TSLA — Price forecast (next 3 days)" width="48%">
-  <img src="outputs/aapl_forecast.png" alt="AAPL — Price forecast (next 3 days)" width="48%">
-</p>
-
-### Comparison
-<img src="outputs/comparison_history_vs_forecast.png"
-     alt="Comparison around 'Today': history vs mean forecast">
-
 
 ---
 
@@ -168,7 +154,35 @@ Useful for auditing, comparisons across runs, and lightweight experimentation.
 
 ---
 
-## Project structure
+## Demo / Screenshots
+
+### Forecast charts
+
+<p align="center">
+  <img src="outputs/tsla_forecast.png" alt="TSLA — Price forecast (next 3 days)" width="48%">
+  <img src="outputs/aapl_forecast.png" alt="AAPL — Price forecast (next 3 days)" width="48%">
+</p>
+
+### Comparison
+<img src="outputs/comparison_history_vs_forecast.png"
+     alt="Comparison around 'Today': history vs mean forecast">
+
+### Comparison table
+<img src="outputs/comparison_table.png"
+     alt= "Predicted price and range of price that 90% price falls under this range for next day.">
+
+### Tested Predictions
+
+We tested the app and predicted the next day return of BIC on 20th Aug and checked against the actual closing price on 21st Aug using yahoo finance.  
+
+<p align="center">
+  <img src="results/test_predicted.jpeg" alt="App prediction (20 Aug run)" width="48%">
+  <img src="results/test_compared.jpeg" alt="Comparison: predicted vs actual close on 21 Aug" width="48%">
+</p>
+
+---
+
+## Repo structure
 ```text
 project/
 ├─ app/
